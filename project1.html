@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--
+  ════════════════════════════════════════════════════════════════
+  КАК РЕДАКТИРОВАТЬ ЭТУ СТРАНИЦУ
+  ════════════════════════════════════════════════════════════════
+  Этот файл — страница кейса для проекта 1 (FinFlow).
+  Для проекта 2 используй project2.html, для 3 — project3.html и т.д.
+
+  ЧТО МЕНЯТЬ:
+  1. <title> — название вкладки браузера
+  2. .hero-title — заголовок проекта
+  3. .hero-year — год проекта
+  4. .tag — теги (можно добавить/убрать)
+  5. .context-text — краткий контекст
+  6. Разделы «Задача», «Процесс», «Ключевые решения», «Результат»
+     — просто меняй текст внутри тегов <p> и <li>
+  7. Изображения — см. блок «ИНТЕРФЕЙС» ниже
+
+  КАК ДОБАВЛЯТЬ ИЗОБРАЖЕНИЯ:
+  — Создай папку images/ рядом с этим файлом
+  — Положи туда свои скрины, например: images/finflow-1.png
+  — В блоке «ИНТЕРФЕЙС» замени src="images/placeholder-1.png"
+    на путь к своему файлу
+  — Для alt="" напиши краткое описание экрана
+  ════════════════════════════════════════════════════════════════
+  -->
+
+  <!-- ── ЗАГОЛОВОК ВКЛАДКИ — меняй под каждый проект ── -->
+  <title>FinFlow — Кейс / Anna Gaidaeva</title>
+
+  <!-- Шрифты — те же что на главной -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ================================================================
+       DESIGN TOKENS — точно такие же как на portfolio.html
+    ================================================================ */
+    :root {
+      --bg:            #0a0a0b;
+      --surface:       #111113;
+      --surface-2:     #18181c;
+      --border:        rgba(255,255,255,.07);
+      --border-hover:  rgba(255,255,255,.15);
+
+      --text-primary:   #f0eff2;
+      --text-secondary: rgba(240,239,242,.48);
+      --text-tertiary:  rgba(240,239,242,.28);
+
+      --accent:        #6bffb8;
+      --accent-dim:    rgba(107,255,184,.10);
+      --accent-glow:   rgba(107,255,184,.22);
+
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 40px;
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+      --s1:8px;  --s2:16px; --s3:24px; --s4:32px; --s5:40px;
+      --s6:48px; --s8:64px; --s12:96px; --s16:128px; --s24:192px;
+
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans:  'DM Sans', system-ui, sans-serif;
+
+      /* Ширина контентной колонки (текст читается лучше узкой) */
+      --content-width: 720px;
+    }
+
+    /* ── Reset ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; width: 100%; height: auto; }
+
+    /* Thin scrollbar */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 2px; }
+
+    /* Grain texture overlay (та же что на главной) */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 998; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: .7;
+    }
+
+    /* ================================================================
+       NAV — такой же frosted-glass как на главной
+    ================================================================ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: var(--s3) 0;
+      background: rgba(10,10,11,.8);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border-bottom: 1px solid var(--border);
+      transition: border-color .4s;
+    }
+
+    .nav-inner {
+      width: 100%; max-width: 1160px;
+      margin: 0 auto; padding: 0 var(--s4);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--s3);
+    }
+
+    /* Логотип — ссылка на главную */
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.1rem; letter-spacing: -.01em;
+      white-space: nowrap;
+    }
+    .nav-logo em { font-style: normal; color: var(--accent); }
+
+    /* Кнопка «Назад к проектам» */
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px var(--s3);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: .82rem; font-weight: 400;
+      color: var(--text-secondary);
+      transition: border-color .25s, color .25s, background .25s;
+      white-space: nowrap;
+    }
+    .btn-back svg { transition: transform .25s var(--ease-out); }
+    .btn-back:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+      background: var(--surface-2);
+    }
+    .btn-back:hover svg { transform: translateX(-3px); }
+
+    /* ================================================================
+       LAYOUT CONTAINER — узкая колонка для текста
+    ================================================================ */
+    .page-wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 var(--s4);
+    }
+
+    /* Узкая колонка для связного текста */
+    .narrow {
+      max-width: var(--content-width);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ================================================================
+       HERO — большой экран проекта
+    ================================================================ */
+    .case-hero {
+      padding-top: 120px; /* компенсация фикс. навбара */
+      padding-bottom: var(--s12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Фоновое свечение */
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(107,255,184,.09) 0%, transparent 70%);
+      filter: blur(80px);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+
+    /* Верхняя строка: теги + год */
+    .hero-meta-row {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: var(--s2);
+      margin-bottom: var(--s5);
+      animation: fadeUp .7s var(--ease-out) .1s both;
+    }
+
+    .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    /* Тег */
+    .tag {
+      padding: 4px 12px; border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      font-size: .7rem; color: var(--text-tertiary); letter-spacing: .04em;
+    }
+    .tag.accent {
+      background: var(--accent-dim);
+      border-color: rgba(107,255,184,.2);
+      color: var(--accent);
+    }
+
+    /* Год проекта */
+    .hero-year {
+      font-size: .78rem; color: var(--text-tertiary);
+      letter-spacing: .06em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Заголовок */
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      line-height: 1.05; letter-spacing: -.03em;
+      margin-bottom: var(--s5);
+      animation: fadeUp .8s var(--ease-out) .2s both;
+    }
+
+    /* Главное изображение кейса */
+    .hero-image-wrap {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      /* Минимальная высота — если картинки ещё нет */
+      min-height: 360px;
+      display: flex; align-items: center; justify-content: center;
+      animation: fadeUp .9s var(--ease-out) .35s both;
+    }
+
+    /* Если картинка есть — она растянется на всю ширину */
+    .hero-image-wrap img {
+      object-fit: cover;
+      width: 100%; height: 100%;
+    }
+
+    /* Заглушка (удали когда добавишь реальное изображение) */
+    .img-placeholder {
+      width: 100%; min-height: 360px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: var(--s2);
+      color: var(--text-tertiary);
+      font-size: .82rem; letter-spacing: .06em; text-transform: uppercase;
+    }
+    .img-placeholder svg { opacity: .3; }
+
+    /* ================================================================
+       РАЗДЕЛЫ КЕЙСА — общие стили
+    ================================================================ */
+    .case-section {
+      padding: var(--s12) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Лейбл раздела */
+    .section-label {
+      display: flex; align-items: center; gap: var(--s2);
+      font-size: .68rem; font-weight: 500;
+      letter-spacing: .13em; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--s4);
+    }
+    .section-label::before {
+      content: ''; width: 18px; height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Заголовок раздела */
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      line-height: 1.1; letter-spacing: -.025em;
+      margin-bottom: var(--s5);
+    }
+
+    /* Абзац */
+    .case-text {
+      font-size: 1rem; color: var(--text-secondary);
+      line-height: 1.85; margin-bottom: var(--s4);
+    }
+    .case-text:last-child { margin-bottom: 0; }
+
+    /* Список с буллетами */
+    .case-list {
+      display: flex; flex-direction: column; gap: var(--s2);
+      margin-bottom: var(--s4);
+    }
+    .case-list li {
+      display: flex; align-items: flex-start; gap: var(--s2);
+      font-size: 1rem; color: var(--text-secondary); line-height: 1.75;
+    }
+    .case-list li::before {
+      content: '';
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0; margin-top: 9px;
+    }
+
+    /* ================================================================
+       РАЗДЕЛ «КЛЮЧЕВЫЕ РЕШЕНИЯ» — карточки-инсайты
+    ================================================================ */
+    .solutions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--s3);
+      margin-top: var(--s5);
+    }
+
+    .solution-card {
+      padding: var(--s4);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      transition: border-color .25s var(--ease-out), transform .25s var(--ease-out);
+    }
+    .solution-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+    }
+
+    .solution-number {
+      font-family: var(--font-serif);
+      font-size: 2rem; color: var(--accent);
+      letter-spacing: -.02em;
+      opacity: .5; display: block;
+      margin-bottom: var(--s2);
+    }
+
+    .solution-title {
+      font-size: .95rem; font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: var(--s1);
+      line-height: 1.3;
+    }
+
+    .solution-desc {
+      font-size: .84rem; color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ================================================================
+       РАЗДЕЛ «ИНТЕРФЕЙС» — галерея скринов
+    ================================================================ */
+    .interface-grid {
+      display: grid;
+      gap: var(--s3);
+      margin-top: var(--s5);
+    }
+
+    /* Одна широкая картинка на всю строку */
+    .interface-grid.cols-1 { grid-template-columns: 1fr; }
+
+    /* Две картинки в ряд */
+    .interface-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+
+    /* Смешанная: сначала широкая, потом две */
+    .interface-grid.cols-mixed {
+      grid-template-columns: 1fr 1fr;
+    }
+    .interface-grid.cols-mixed .img-full {
+      grid-column: 1 / -1;
+    }
+
+    .interface-img {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      min-height: 200px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .interface-img img {
+      object-fit: cover;
+      width: 100%; height: 100%;
+      display: block;
+      transition: transform .5s var(--ease-out);
+    }
+    .interface-img:hover img { transform: scale(1.02); }
+
+    /* Подпись к скрину */
+    .img-caption {
+      font-size: .75rem; color: var(--text-tertiary);
+      margin-top: var(--s1); letter-spacing: .03em;
+      padding: 0 2px;
+    }
+
+    /* Обёртка картинки + подписи */
+    .img-with-caption { display: flex; flex-direction: column; }
+
+    /* ================================================================
+       РАЗДЕЛ «РЕЗУЛЬТАТ» — крупные цифры
+    ================================================================ */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--s3);
+      margin: var(--s5) 0;
+    }
+
+    .result-card {
+      padding: var(--s4) var(--s3);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      text-align: center;
+      transition: border-color .25s;
+    }
+    .result-card:hover { border-color: rgba(107,255,184,.25); }
+
+    .result-num {
+      font-family: var(--font-serif);
+      font-size: 2.6rem; color: var(--accent);
+      letter-spacing: -.03em; display: block;
+      margin-bottom: var(--s1);
+    }
+
+    .result-label {
+      font-size: .8rem; color: var(--text-tertiary);
+      line-height: 1.45;
+    }
+
+    /* ================================================================
+       НАВИГАЦИЯ МЕЖДУ КЕЙСАМИ (внизу страницы)
+    ================================================================ */
+    .case-nav {
+      padding: var(--s12) 0 var(--s16);
+      border-top: 1px solid var(--border);
+    }
+
+    .case-nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--s4); flex-wrap: wrap;
+    }
+
+    .case-nav-link {
+      display: flex; flex-direction: column; gap: 4px;
+      padding: var(--s3) var(--s4);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: border-color .25s, background .25s, transform .25s;
+      max-width: 320px;
+    }
+    .case-nav-link:hover {
+      border-color: var(--border-hover);
+      background: var(--surface-2);
+      transform: translateY(-2px);
+    }
+
+    .case-nav-dir {
+      font-size: .68rem; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--text-tertiary);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .case-nav-title {
+      font-family: var(--font-serif);
+      font-size: 1.1rem; color: var(--text-primary);
+      letter-spacing: -.01em;
+    }
+
+    /* ================================================================
+       REVEAL ANIMATIONS
+    ================================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .75s var(--ease-out), transform .75s var(--ease-out);
+    }
+    .reveal.v { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: .08s; }
+    .d2 { transition-delay: .16s; }
+    .d3 { transition-delay: .24s; }
+
+    /* ================================================================
+       CUSTOM CURSOR (desktop)
+    ================================================================ */
+    .cur {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+      transition: width .18s, height .18s;
+    }
+    .cur-ring {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(107,255,184,.35);
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width .4s var(--ease-out), height .4s var(--ease-out);
+    }
+    .cur.hov { width: 14px; height: 14px; }
+    .cur-ring.hov { width: 54px; height: 54px; border-color: rgba(107,255,184,.18); }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media (max-width: 768px) {
+      .interface-grid.cols-2,
+      .interface-grid.cols-mixed { grid-template-columns: 1fr; }
+      .interface-grid.cols-mixed .img-full { grid-column: auto; }
+      .solutions-grid { grid-template-columns: 1fr; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
+      .case-nav-inner { flex-direction: column; align-items: stretch; }
+      .case-nav-link { max-width: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .page-wrap { padding: 0 var(--s3); }
+      .results-grid { grid-template-columns: 1fr; }
+      .cur, .cur-ring { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Кастомный курсор (Desktop) -->
+  <div class="cur" id="cur"></div>
+  <div class="cur-ring" id="curRing"></div>
+
+  <!-- ================================================================
+       NAV
+  ================================================================ -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <!-- Логотип — всегда ведёт на главную -->
+      <a href="portfolio.html" class="nav-logo">Anna<em>.</em></a>
+
+      <!-- Кнопка «Назад к проектам» -->
+      <a href="portfolio.html#projects" class="btn-back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M13 7H1M7 13L1 7l6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Назад к проектам
+      </a>
+    </div>
+  </nav>
+
+  <!-- ================================================================
+       HERO
+       Главный экран кейса: теги, год, заголовок, большое изображение
+  ================================================================ -->
+  <section class="case-hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="page-wrap">
+
+      <!-- ── ТЕГИ и ГОД ──────────────────────────────────────────
+           Теги: меняй текст внутри .tag
+           Год:  меняй цифру внутри .hero-year
+      ───────────────────────────────────────────────────────────── -->
+      <div class="hero-meta-row">
+        <div class="tag-list">
+          <span class="tag accent">E-commerce</span>
+          <span class="tag">Web</span>
+          <span class="tag">Mobile</span>
+        </div>
+        <span class="hero-year">2025</span>
+      </div>
+
+      <!-- ── ЗАГОЛОВОК ПРОЕКТА ──────────────────────────────────
+           Меняй текст заголовка здесь
+      ───────────────────────────────────────────────────────────── -->
+      <h1 class="hero-title narrow">
+        Новые сети — редизайн сайта<br>и пользовательского сценария выбора товара.
+      </h1>
+
+      <!-- ── ГЛАВНОЕ ИЗОБРАЖЕНИЕ ───────────────────────────────
+           Замени src на путь к своему главному скрину:
+           src="images/finflow-hero.png"
+
+           Если изображения пока нет — заглушка покажет подсказку.
+           Когда добавишь картинку — удали весь блок .img-placeholder
+           и раскомментируй тег <img>.
+      ───────────────────────────────────────────────────────────── -->
+      <div class="hero-image-wrap">
+        <img src="images/project1_main.jpg"
+             alt="Главный экран проекта Новые сети"
+             loading="eager" />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================
+       КОНТЕКСТ ПРОЕКТА
+       Краткое введение: что это, для кого, зачем
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap narrow">
+      <div class="section-label reveal">Контекст</div>
+
+      <!-- ── ТЕКСТ КОНТЕКСТА — меняй здесь ── -->
+      <p class="case-text reveal d1">
+        Сайт компании «Новые сети» — корпоративный ресурс с каталогом технически 
+        сложной продукции для специалистов и клиентов из строительной и инженерной отрасли.
+        Со временем структура каталога усложнилась, а пользователям стало трудно 
+        ориентироваться в ассортименте и выбирать подходящие решения.
+      </p>
+      <p class="case-text reveal d2">
+        Меня пригласили переработать пользовательский сценарий выбора продукции и обновить структуру сайта.
+        Основная цель проекта — упростить навигацию по каталогу и сделать процесс выбора оборудования понятным для разных категорий пользователей.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       ЗАДАЧА
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap narrow">
+      <div class="section-label reveal">Задача</div>
+      <h2 class="section-title reveal d1">Что нужно было решить</h2>
+
+      <!-- ── ТЕКСТ ЗАДАЧИ — меняй здесь ── -->
+      <p class="case-text reveal d1">
+        Редизайн сайта компании с переработкой ключевого пользовательского сценария выбора продукции.
+        В рамках проекта была пересмотрена архитектура каталога, логика карточек товара и сценарий оформления запроса.
+      </p>
+
+      <!-- ── СПИСОК ПРОБЛЕМ — меняй пункты ── -->
+      <ul class="case-list reveal d2">
+        <li>Упростить навигацию по технически сложному каталогу</li>
+        <li>сделать структуру ассортимента более понятной для пользователей разных ролей</li>
+        <li>улучшить сценарий работы с карточкой товара и оформлением запроса</li>
+        <li>адаптировать интерфейс под мобильные устройства</li>
+        <li>создать базу знаний для поддержки выбора продукции</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       ПРОЦЕСС
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap narrow">
+      <div class="section-label reveal">Процесс</div>
+      <h2 class="section-title reveal d1">Как я работала над проектом</h2>
+
+      <!-- ── ТЕКСТ ПРОЦЕССА — меняй здесь ── -->
+      <p class="case-text reveal d1">
+        Работа началась с анализа поведения пользователей на сайте на основе входящих запросов клиентов компании. Это позволило определить основные сценарии поиска продукции и уточнить ключевые категории пользователей.
+      </p>
+      <p class="case-text reveal d2">
+        На основе анализа была переработана структура каталога и логика карточек товара: упрощён сценарий выбора продукции и взаимодействия с компанией через сайт. Дополнительно разработана база знаний, которая помогает пользователям ориентироваться в ассортименте и быстрее находить нужные решения.
+      </p>
+      <p class="case-text reveal d3">
+        В рамках проекта также была спроектирована мобильная версия сайта с учётом основных пользовательских сценариев работы с каталогом.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       КЛЮЧЕВЫЕ РЕШЕНИЯ
+       Карточки с главными дизайн-решениями
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap">
+      <div class="narrow">
+        <div class="section-label reveal">Ключевые решения</div>
+        <h2 class="section-title reveal d1">Что изменилось принципиально</h2>
+      </div>
+
+      <!-- ── КАРТОЧКИ РЕШЕНИЙ — меняй заголовки и описания ── -->
+      <!-- Добавляй или удаляй .solution-card по необходимости -->
+      <div class="solutions-grid">
+
+        <div class="solution-card reveal">
+          <span class="solution-number">01</span>
+          <div class="solution-title">Пересобрана архитектура каталога</div>
+          <p class="solution-desc">
+            Структура ассортимента была переработана на основе пользовательских запросов клиентов компании. Каталог стал более логичным и последовательным, что упростило поиск нужной продукции внутри технически сложных категорий.
+          </p>
+        </div>
+
+        <div class="solution-card reveal d1">
+          <span class="solution-number">02</span>
+          <div class="solution-title">Обновлён сценарий работы с карточкой товара</div>
+          <p class="solution-desc">
+            Переработана структура карточек продукции: ключевые характеристики стали доступнее, а сценарий оформления запроса — понятнее и короче для пользователя.
+          </p>
+        </div>
+
+        <div class="solution-card reveal d2">
+          <span class="solution-number">03</span>
+          <div class="solution-title">Добавлена база знаний для поддержки выбора</div>
+          <p class="solution-desc">
+            Разработан раздел с поясняющими материалами и справочной информацией, который помогает пользователям ориентироваться в ассортименте и принимать решения без обращения к менеджеру.
+          </p>
+        </div>
+
+        <div class="solution-card reveal d3">
+          <span class="solution-number">04</span>
+          <div class="solution-title">Спроектирована мобильная версия каталога</div>
+          <p class="solution-desc">
+            Интерфейс адаптирован под мобильные устройства с учётом реальных сценариев поиска продукции и просмотра характеристик в полевых условиях и на объекте.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       ИНТЕРФЕЙС — галерея скринов
+       ────────────────────────────────────────────────────────────────
+       КАК ДОБАВЛЯТЬ ИЗОБРАЖЕНИЯ:
+       1. Создай папку images/ рядом с этим файлом
+       2. Положи скрины: images/finflow-1.png, images/finflow-2.png и т.д.
+       3. В каждом .interface-img замени заглушку на реальный <img>
+       4. Обнови alt="" с описанием экрана
+       5. Обнови текст .img-caption
+
+       ВАРИАНТЫ СЕТКИ:
+       — cols-1   : одна картинка во всю ширину
+       — cols-2   : две картинки в ряд
+       — cols-mixed: первая во всю ширину, следующие — по две
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap">
+      <div class="narrow">
+        <div class="section-label reveal">Интерфейс</div>
+        <h2 class="section-title reveal d1">Финальные экраны</h2>
+      </div>
+
+      <!-- Сетка с изображениями -->
+      <div class="interface-grid cols-mixed reveal d1">
+
+        <!-- Изображение 1 — широкое (занимает всю строку) -->
+        <div class="img-with-caption img-full">
+          <div class="interface-img" style="min-height:420px;">
+            <img src="images/project1_1.jpg"
+              alt="Экран 1"
+              loading="lazy" />
+          </div>
+          <p class="img-caption">Карточка товара</p>
+        </div>
+
+        <!-- Изображение 2 (левая половина) -->
+        <div class="img-with-caption">
+          <div class="interface-img" style="min-height:280px;">
+            <img src="images/project1_2.jpg"
+              alt="Экран 2"
+              loading="lazy" />
+          </div>
+          <p class="img-caption">Каталог</p>
+        </div>
+
+        <!-- Изображение 3 (правая половина) -->
+        <div class="img-with-caption">
+          <div class="interface-img" style="min-height:280px;">
+            <img src="images/project1_3.png"
+              alt="Экран 3"
+              loading="lazy" />
+          </div>
+          <p class="img-caption">Сравнение товара</p>
+        </div>
+
+        <!-- Изображение 4 — ещё одно широкое (опционально) -->
+        <div class="img-with-caption img-full">
+          <div class="interface-img" style="min-height:300px;">
+            <img src="images/project1_4.png"
+             alt="Экран 4"
+             loading="lazy" />
+          </div>
+          <p class="img-caption">Адаптивная версия для мобилки</p>
+        </div>
+
+      </div><!-- /interface-grid -->
+    </div>
+  </section>
+
+  <!-- ================================================================
+       РЕЗУЛЬТАТ — итоги проекта
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap">
+      <div class="narrow">
+        <div class="section-label reveal">Результат</div>
+        <h2 class="section-title reveal d1">Что показал этот проект</h2>
+      </div>
+
+      <!-- ── ИТОГОВЫЙ ТЕКСТ — меняй здесь ── -->
+      <div class="narrow">
+        <p class="case-text reveal d2">
+          Этот проект показал, насколько важна работа с реальными пользовательскими запросами при проектировании структуры технически сложного каталога. Даже небольшие изменения в логике навигации и карточках продукции существенно упрощают процесс выбора оборудования и делают сайт рабочим инструментом, а не только витриной компании.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       НАВИГАЦИЯ — переход между кейсами
+       Меняй href и заголовки под свои проекты
+  ================================================================ -->
+  <section class="case-nav">
+    <div class="page-wrap">
+      <div class="case-nav-inner">
+
+        <!-- Предыдущий кейс (или скрой блок если это первый) -->
+        <!-- Если это первый кейс — можно удалить этот блок целиком -->
+        <a href="portfolio.html#projects" class="case-nav-link">
+          <span class="case-nav-dir">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M11 6H1M5 2L1 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Все проекты
+          </span>
+          <span class="case-nav-title">Вернуться к портфолио</span>
+        </a>
+
+        <!-- Следующий кейс -->
+        <a href="project2.html" class="case-nav-link" style="text-align:right; margin-left:auto;">
+          <span class="case-nav-dir" style="justify-content:flex-end;">
+            Следующий кейс
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="case-nav-title">TetronMed - предрейсовые медосмотры </span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       JAVASCRIPT
+  ================================================================ -->
+  <script>
+    /* ── Custom cursor ─────────────────────────────────────────── */
+    const cur  = document.getElementById('cur');
+    const ring = document.getElementById('curRing');
+    let mx=0, my=0, rx=0, ry=0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+    });
+
+    (function loop() {
+      rx += (mx - rx) * .11; ry += (my - ry) * .11;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(loop);
+    })();
+
+    document.querySelectorAll('a, button, .solution-card, .result-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { cur.classList.add('hov'); ring.classList.add('hov'); });
+      el.addEventListener('mouseleave', () => { cur.classList.remove('hov'); ring.classList.remove('hov'); });
+    });
+
+    /* ── Nav border on scroll ─────────────────────────────────── */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.borderBottomColor = window.scrollY > 40
+        ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.07)';
+    }, { passive: true });
+
+    /* ── IntersectionObserver: scroll reveals ─────────────────── */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('v');
+        io.unobserve(en.target);
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>

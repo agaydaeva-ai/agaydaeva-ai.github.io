@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--
+  ════════════════════════════════════════════════════════════════
+  КАК РЕДАКТИРОВАТЬ ЭТУ СТРАНИЦУ — project4.html (Bloom Market)
+  ════════════════════════════════════════════════════════════════
+  1. <title>          — название вкладки браузера
+  2. .hero-title      — заголовок проекта
+  3. .hero-year       — год проекта
+  4. .tag             — теги (меняй текст, добавляй/удаляй)
+  5. Разделы «Контекст», «Задача», «Процесс», «Ключевые решения», «Результат»
+     — просто меняй текст внутри <p> и <li>
+
+  КАК ДОБАВЛЯТЬ ИЗОБРАЖЕНИЯ:
+  — Создай папку images/ рядом с этим файлом
+  — Положи скрины: images/bloom-hero.png, images/bloom-1.png и т.д.
+  — Найди блок .img-placeholder, удали его
+  — Раскомментируй тег <img src="images/...">
+  — Обнови alt="" и текст .img-caption
+  ════════════════════════════════════════════════════════════════
+  -->
+
+  <title>Bloom Market — Кейс / Anna Gaidaeva</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:#0a0a0b; --surface:#111113; --surface-2:#18181c;
+      --border:rgba(255,255,255,.07); --border-hover:rgba(255,255,255,.15);
+      --text-primary:#f0eff2; --text-secondary:rgba(240,239,242,.48); --text-tertiary:rgba(240,239,242,.28);
+      --accent:#6bffb8; --accent-dim:rgba(107,255,184,.10); --accent-glow:rgba(107,255,184,.22);
+      --radius-sm:8px; --radius-md:16px; --radius-lg:24px; --radius-xl:40px;
+      --ease-out:cubic-bezier(0.16,1,0.3,1);
+      --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:40px;--s6:48px;--s8:64px;--s12:96px;--s16:128px;--s24:192px;
+      --font-serif:'DM Serif Display',Georgia,serif; --font-sans:'DM Sans',system-ui,sans-serif;
+      --content-width:720px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text-primary);font-family:var(--font-sans);font-weight:300;line-height:1.65;overflow-x:hidden;}
+    a{color:inherit;text-decoration:none;} ul{list-style:none;} img{display:block;width:100%;height:auto;}
+    ::-webkit-scrollbar{width:3px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:2px;}
+    body::after{content:'';position:fixed;inset:0;z-index:998;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:.7;}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:var(--s3) 0;background:rgba(10,10,11,.8);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border-bottom:1px solid var(--border);transition:border-color .4s;}
+    .nav-inner{width:100%;max-width:1160px;margin:0 auto;padding:0 var(--s4);display:flex;align-items:center;justify-content:space-between;gap:var(--s3);}
+    .nav-logo{font-family:var(--font-serif);font-size:1.1rem;letter-spacing:-.01em;white-space:nowrap;}
+    .nav-logo em{font-style:normal;color:var(--accent);}
+    .btn-back{display:inline-flex;align-items:center;gap:8px;padding:10px var(--s3);border-radius:var(--radius-xl);border:1px solid var(--border);background:var(--surface);font-size:.82rem;font-weight:400;color:var(--text-secondary);transition:border-color .25s,color .25s,background .25s;white-space:nowrap;}
+    .btn-back svg{transition:transform .25s var(--ease-out);}
+    .btn-back:hover{border-color:var(--border-hover);color:var(--text-primary);background:var(--surface-2);}
+    .btn-back:hover svg{transform:translateX(-3px);}
+
+    .page-wrap{max-width:1160px;margin:0 auto;padding:0 var(--s4);}
+    .narrow{max-width:var(--content-width);margin-left:auto;margin-right:auto;}
+
+    .case-hero{padding-top:120px;padding-bottom:var(--s12);position:relative;overflow:hidden;}
+    .hero-glow{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(107,255,184,.07) 0%,transparent 70%);filter:blur(80px);bottom:-80px;left:-80px;pointer-events:none;}
+    .hero-meta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s2);margin-bottom:var(--s5);animation:fadeUp .7s var(--ease-out) .1s both;}
+    .tag-list{display:flex;flex-wrap:wrap;gap:8px;}
+    .tag{padding:4px 12px;border-radius:var(--radius-xl);border:1px solid var(--border);background:var(--surface-2);font-size:.7rem;color:var(--text-tertiary);letter-spacing:.04em;}
+    .tag.accent{background:var(--accent-dim);border-color:rgba(107,255,184,.2);color:var(--accent);}
+    .hero-year{font-size:.78rem;color:var(--text-tertiary);letter-spacing:.06em;font-variant-numeric:tabular-nums;}
+    .hero-title{font-family:var(--font-serif);font-size:clamp(2.4rem,5.5vw,4.2rem);line-height:1.05;letter-spacing:-.03em;margin-bottom:var(--s5);animation:fadeUp .8s var(--ease-out) .2s both;}
+    .hero-image-wrap{width:100%;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);background:var(--surface-2);min-height:360px;display:flex;align-items:center;justify-content:center;animation:fadeUp .9s var(--ease-out) .35s both;}
+    .hero-image-wrap img{object-fit:cover;width:100%;height:100%;}
+    .img-placeholder{width:100%;min-height:360px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s2);color:var(--text-tertiary);font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;}
+    .img-placeholder svg{opacity:.3;}
+
+    .case-section{padding:var(--s12) 0;border-top:1px solid var(--border);}
+    .section-label{display:flex;align-items:center;gap:var(--s2);font-size:.68rem;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:var(--s4);}
+    .section-label::before{content:'';width:18px;height:1px;background:var(--accent);flex-shrink:0;}
+    .section-title{font-family:var(--font-serif);font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.1;letter-spacing:-.025em;margin-bottom:var(--s5);}
+    .case-text{font-size:1rem;color:var(--text-secondary);line-height:1.85;margin-bottom:var(--s4);}
+    .case-text:last-child{margin-bottom:0;}
+    .case-list{display:flex;flex-direction:column;gap:var(--s2);margin-bottom:var(--s4);}
+    .case-list li{display:flex;align-items:flex-start;gap:var(--s2);font-size:1rem;color:var(--text-secondary);line-height:1.75;}
+    .case-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:9px;}
+
+    .solutions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--s3);margin-top:var(--s5);}
+    .solution-card{padding:var(--s4);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);transition:border-color .25s var(--ease-out),transform .25s var(--ease-out);}
+    .solution-card:hover{border-color:var(--border-hover);transform:translateY(-3px);}
+    .solution-number{font-family:var(--font-serif);font-size:2rem;color:var(--accent);letter-spacing:-.02em;opacity:.5;display:block;margin-bottom:var(--s2);}
+    .solution-title{font-size:.95rem;font-weight:500;color:var(--text-primary);margin-bottom:var(--s1);line-height:1.3;}
+    .solution-desc{font-size:.84rem;color:var(--text-secondary);line-height:1.7;}
+
+    .interface-grid{display:grid;gap:var(--s3);margin-top:var(--s5);}
+    .interface-grid.cols-1{grid-template-columns:1fr;}
+    .interface-grid.cols-2{grid-template-columns:1fr 1fr;}
+    .interface-grid.cols-mixed{grid-template-columns:1fr 1fr;}
+    .interface-grid.cols-mixed .img-full{grid-column:1/-1;}
+    .interface-img{border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border);background:var(--surface-2);min-height:200px;display:flex;align-items:center;justify-content:center;}
+    .interface-img img{object-fit:cover;width:100%;height:100%;display:block;transition:transform .5s var(--ease-out);}
+    .interface-img:hover img{transform:scale(1.02);}
+    .img-caption{font-size:.75rem;color:var(--text-tertiary);margin-top:var(--s1);letter-spacing:.03em;padding:0 2px;}
+    .img-with-caption{display:flex;flex-direction:column;}
+
+    .results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--s3);margin:var(--s5) 0;}
+    .result-card{padding:var(--s4) var(--s3);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);text-align:center;transition:border-color .25s;}
+    .result-card:hover{border-color:rgba(107,255,184,.25);}
+    .result-num{font-family:var(--font-serif);font-size:2.6rem;color:var(--accent);letter-spacing:-.03em;display:block;margin-bottom:var(--s1);}
+    .result-label{font-size:.8rem;color:var(--text-tertiary);line-height:1.45;}
+
+    .case-nav{padding:var(--s12) 0 var(--s16);border-top:1px solid var(--border);}
+    .case-nav-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;}
+    .case-nav-link{display:flex;flex-direction:column;gap:4px;padding:var(--s3) var(--s4);border-radius:var(--radius-md);border:1px solid var(--border);background:var(--surface);transition:border-color .25s,background .25s,transform .25s;max-width:320px;}
+    .case-nav-link:hover{border-color:var(--border-hover);background:var(--surface-2);transform:translateY(-2px);}
+    .case-nav-dir{font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-tertiary);display:flex;align-items:center;gap:6px;}
+    .case-nav-title{font-family:var(--font-serif);font-size:1.1rem;color:var(--text-primary);letter-spacing:-.01em;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .75s var(--ease-out),transform .75s var(--ease-out);}
+    .reveal.v{opacity:1;transform:translateY(0);}
+    .d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}
+
+    .cur{width:8px;height:8px;border-radius:50%;background:var(--accent);position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .18s,height .18s;}
+    .cur-ring{width:36px;height:36px;border-radius:50%;border:1px solid rgba(107,255,184,.35);position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .4s var(--ease-out),height .4s var(--ease-out);}
+    .cur.hov{width:14px;height:14px;}.cur-ring.hov{width:54px;height:54px;border-color:rgba(107,255,184,.18);}
+
+    @media(max-width:768px){
+      .interface-grid.cols-2,.interface-grid.cols-mixed{grid-template-columns:1fr;}
+      .interface-grid.cols-mixed .img-full{grid-column:auto;}
+      .solutions-grid{grid-template-columns:1fr;}
+      .results-grid{grid-template-columns:1fr 1fr;}
+      .case-nav-inner{flex-direction:column;align-items:stretch;}
+      .case-nav-link{max-width:100%;}
+    }
+    @media(max-width:480px){
+      .page-wrap{padding:0 var(--s3);}
+      .results-grid{grid-template-columns:1fr;}
+      .cur,.cur-ring{display:none;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cur" id="cur"></div>
+  <div class="cur-ring" id="curRing"></div>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="portfolio.html" class="nav-logo">Anna<em>.</em></a>
+      <a href="portfolio.html#projects" class="btn-back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M13 7H1M7 13L1 7l6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Назад к проектам
+      </a>
+    </div>
+  </nav>
+
+  <!-- ================================================================
+       HERO
+       ── МЕНЯЙ: теги, год, заголовок, изображение
+  ================================================================ -->
+  <section class="case-hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="page-wrap">
+
+      <div class="hero-meta-row">
+        <div class="tag-list">
+          <span class="tag accent">Experimental UI</span>
+          <span class="tag">Concept project</span>
+          <span class="tag">Artistic web design</span>
+        </div>
+        <span class="hero-year">2025</span>
+      </div>
+
+      <h1 class="hero-title narrow">
+        La Taza — дизайн концепта сайта кафе
+      </h1>
+
+      <!-- ── ГЛАВНОЕ ИЗОБРАЖЕНИЕ ──────────────────────────────
+           Замени src: src="images/bloom-hero.png"
+           Удали .img-placeholder, раскомментируй <img>
+      ───────────────────────────────────────────────────────── -->
+      <div class="hero-image-wrap">
+        <img src="images/project4_main.png"
+             alt="Экран терминала"
+             loading="eager" />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================
+       КОНТЕКСТ
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap narrow">
+      <div class="section-label reveal">Контекст</div>
+      <p class="case-text reveal d1">
+        La Taza — концептуальный учебный проект сайта сюрреалистичного кафе, построенного на визуальных метафорах и игре восприятия.
+      </p>
+      <p class="case-text reveal d2">
+        Проект разрабатывался как эксперимент с визуальным языком интерфейса и возможностями сторителлинга внутри веб-страницы.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       ЗАДАЧА
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap narrow">
+      <div class="section-label reveal">Задача</div>
+      <h2 class="section-title reveal d1">Что нужно было спроектировать</h2>
+      <p class="case-text reveal d1">
+        Задачей проекта стало создание интерфейса, который передаёт атмосферу заведения через нестандартные визуальные решения и превращает просмотр меню в часть пользовательского опыта, а не только навигационный сценарий выбора блюд..
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       ПРОЦЕСС
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap narrow">
+      <div class="section-label reveal">Процесс</div>
+      <h2 class="section-title reveal d1">Как я работала над проектом</h2>
+      <p class="case-text reveal d1">
+        Работа началась с формирования визуальной концепции сайта и определения художественного направления интерфейса.
+      </p>
+      <p class="case-text reveal d2">
+        На основе выбранной стилистики была разработана структура экранов и композиция страниц меню, в которых визуальные элементы становятся частью пользовательского сценария взаимодействия с контентом.
+      </p>
+      <p class="case-text reveal d3">
+        Особое внимание уделялось сочетанию типографики, графики и композиционных решений, формирующих атмосферу сайта и поддерживающих концепцию сюрреалистичного пространства.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       КЛЮЧЕВЫЕ РЕШЕНИЯ
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap">
+      <div class="narrow">
+        <div class="section-label reveal">Ключевые решения</div>
+        <h2 class="section-title reveal d1">Ключевые UX-решения проекта</h2>
+      </div>
+
+      <div class="solutions-grid">
+
+        <div class="solution-card reveal">
+          <span class="solution-number">01</span>
+          <div class="solution-title">Интерфейс как часть атмосферы заведения</div>
+          <p class="solution-desc">
+            Структура страниц построена так, чтобы пользователь воспринимал сайт не только как меню, но и как продолжение визуальной концепции кафе.
+          </p>
+        </div>
+
+        <div class="solution-card reveal d1">
+          <span class="solution-number">02</span>
+          <div class="solution-title">Визуальные метафоры внутри экранов</div>
+          <p class="solution-desc">
+            Композиция экранов и графические элементы используются как средство создания эмоционального пользовательского опыта.
+          </p>
+        </div>
+
+        <div class="solution-card reveal d2">
+          <span class="solution-number">03</span>
+          <div class="solution-title">Экспериментальная типографика и композиция</div>
+          <p class="solution-desc">
+            Типографические решения работают как часть визуального языка проекта и поддерживают художественную концепцию интерфейса.
+          </p>
+        </div>
+
+        <div class="solution-card reveal d3">
+          <span class="solution-number">04</span>
+          <div class="solution-title">Баланс выразительности и читаемости</div>
+          <p class="solution-desc">
+            Несмотря на экспериментальный характер проекта, структура страниц сохраняет понятную навигацию и читаемость контента.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       ИНТЕРФЕЙС — галерея скринов
+       ── КАК ДОБАВИТЬ ИЗОБРАЖЕНИЕ:
+          1. Положи файл: images/bloom-1.png
+          2. Удали .img-placeholder
+          3. Раскомментируй <img src="...">
+          4. Обнови alt="" и .img-caption
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap">
+      <div class="narrow">
+        <div class="section-label reveal">Интерфейс</div>
+        <h2 class="section-title reveal d1">Финальные экраны</h2>
+      </div>
+
+      <div class="interface-grid cols-mixed reveal d1">
+
+        <!-- Изображение 1 — широкое -->
+        <div class="img-with-caption img-full">
+          <div class="interface-img" style="min-height:420px;">
+            <img src="images/project4_1.png"
+              alt="Экран 1"
+              loading="lazy" />
+          </div>
+          <p class="img-caption">Меню</p>
+        </div>
+
+        <!-- Изображение 2 (левая половина) -->
+        <div class="img-with-caption">
+          <div class="interface-img" style="min-height:280px;">
+            <img src="images/project4_2.png"
+              alt="Экран 2"
+              loading="lazy" />
+          </div>
+          <p class="img-caption">Главная</p>
+        </div>
+
+        <!-- Изображение 3 (правая половина) -->
+        <div class="img-with-caption">
+          <div class="interface-img" style="min-height:280px;">
+            <img src="images/project4_3.png"
+              alt="Экран 3"
+              loading="lazy" />
+          </div>
+          <p class="img-caption">О нас</p>
+        </div>
+
+        <!-- Изображение 4 — ещё одно широкое (опционально) -->
+        <div class="img-with-caption img-full">
+          <div class="interface-img" style="min-height:300px;">
+            <img src="images/project4_4.png"
+             alt="Экран 4"
+             loading="lazy" />
+          </div>
+          <p class="img-caption">Мокап</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       РЕЗУЛЬТАТ
+  ================================================================ -->
+  <section class="case-section">
+    <div class="page-wrap">
+      <div class="narrow">
+        <div class="section-label reveal">Результат</div>
+        <h2 class="section-title reveal d1">Что было важно в этом проекте</h2>
+      </div>
+
+      <div class="narrow">
+        <p class="case-text reveal d2">
+          Проект стал возможностью исследовать роль визуального языка в интерфейсе и показать, как дизайн сайта может работать как часть общей концепции пространства.
+        </p>
+        <p class="case-text reveal d3">
+          Работа над проектом позволила поэкспериментировать с композицией экранов, типографикой и визуальными метафорами и рассмотреть интерфейс как инструмент формирования пользовательского впечатления.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       НАВИГАЦИЯ МЕЖДУ КЕЙСАМИ
+       Это последний кейс — «следующий» ведёт обратно на главную
+  ================================================================ -->
+  <section class="case-nav">
+    <div class="page-wrap">
+      <div class="case-nav-inner">
+        <a href="project3.html" class="case-nav-link">
+          <span class="case-nav-dir">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M11 6H1M5 2L1 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Предыдущий кейс
+          </span>
+          <span class="case-nav-title">Трансфорт — платформа для управления подрядной техикой</span>
+        </a>
+        <a href="portfolio.html#projects" class="case-nav-link" style="text-align:right; margin-left:auto;">
+          <span class="case-nav-dir" style="justify-content:flex-end;">
+            Все проекты
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="case-nav-title">Вернуться к портфолио</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+    (function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+    document.querySelectorAll('a,button,.solution-card,.result-card').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{cur.classList.add('hov');ring.classList.add('hov');});
+      el.addEventListener('mouseleave',()=>{cur.classList.remove('hov');ring.classList.remove('hov');});
+    });
+    const nav=document.getElementById('nav');
+    window.addEventListener('scroll',()=>{nav.style.borderBottomColor=window.scrollY>40?'rgba(255,255,255,.12)':'rgba(255,255,255,.07)';},{passive:true});
+    const io=new IntersectionObserver(entries=>{entries.forEach(en=>{if(!en.isIntersecting)return;en.target.classList.add('v');io.unobserve(en.target);});},{threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
+</body>
+</html>
